@@ -14,3 +14,26 @@ namespace Gerenciador_de_tarefas {
                 Console.WriteLine("4. Sair.");
                 Console.Write("Opção: ");
                 string opcao = Console.ReadLine();
+
+                switch (opcao) {
+
+                    case "1":
+
+                        Console.Write("Título da tarefa: ");
+                        string titulo = Console.ReadLine();
+
+                        Console.Write("Descrição da tarefa: ");
+                        string descricao = Console.ReadLine();
+
+                        Tarefa novaTarefa = new(titulo, descricao);
+                        gerenciador.AdicionarTarefa(novaTarefa);
+
+                        break;
+
+                    case "2":
+
+                        Console.WriteLine("Título");
+                        string tituloRemover = Console.ReadLine();
+                        
+                        gerenciador.RemoverTarefa(tituloRemover);
+                        break;
