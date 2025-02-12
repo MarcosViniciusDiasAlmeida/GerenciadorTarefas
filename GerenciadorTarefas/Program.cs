@@ -34,6 +34,25 @@ namespace Gerenciador_de_tarefas {
 
                         Console.WriteLine("Título");
                         string tituloRemover = Console.ReadLine();
-                        
+
                         gerenciador.RemoverTarefa(tituloRemover);
                         break;
+
+                    case "3":
+                        gerenciador.ListarTarefas();
+                        break;
+                    case "4":
+                        continuar = false;
+                        Console.WriteLine("Saindo...");
+                        break;
+                    default:
+                        Console.WriteLine("opção invalida!");
+                        break;
+                }
+
+
+
+            }
+        }
+    }
+}
