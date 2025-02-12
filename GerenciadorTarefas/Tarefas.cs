@@ -6,3 +6,14 @@ namespace Gerenciador_de_tarefas {
         public string Descricao { get; set; }
 
         public Tarefa() { }
+
+          public Tarefa(string Titulo, string Descricao) {
+            this.Titulo = Titulo;
+            this.Descricao = Descricao;
+        }
+
+        public override string ToString() {
+            return $"Título: {Titulo}\ndescrição: {Descricao}";
+        }
+    }
+}
