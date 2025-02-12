@@ -17,3 +17,16 @@ namespace Gerenciador_de_tarefas {
                 Console.WriteLine("Tarefa não encontrada!");
             }
         }
+
+         public void ListarTarefas() {
+            if(tarefas.Count == 0) {
+                Console.WriteLine("Nenhuma tarefa encontrada.");
+                return;
+            }
+            foreach(Tarefa tarefa in tarefas) {
+                Console.WriteLine(tarefa);
+                Console.WriteLine();
+            }
+        }
+    }
+}
