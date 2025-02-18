@@ -94,4 +94,4 @@ while (true)
             Formatacao.Cor("Saindo...", ConsoleColor.Red);
             return;
     }
-}
+}  //terminando o código
