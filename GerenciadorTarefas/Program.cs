@@ -1,59 +1,97 @@
-using SistemaTarefas.Layout;
-using SistemaTarefas.Servicos;
-using SistemaTarefas.Modelos; // Adicione esta linha
-using System;
-// ... resto do código
-namespace SistemaTarefas
+﻿using Layout;
+using GerenciarTarefa;
+
+string descricao;
+int opcao, id;
+
+Console.Clear();
+while (true)
 {
-    class Program
+    Formatacao.ImprimirCabecalho();
+    Console.WriteLine("1 – Adicionar Tarefa");
+    Console.WriteLine("2 – Listar Tarefas");
+    Console.WriteLine("3 – Concluir Tarefa");
+    Console.WriteLine("4 – Remover Tarefa");
+    Console.WriteLine("0 – Sair");
+
+    while (true)
     {
-        static void Main(string[] args)
-        {
-            var gerenciador = new GerenciadorTarefas();
-            
+        Console.Write("Escolha uma opção: ");
+        if (int.TryParse(Console.ReadLine(), out opcao) && opcao >= 0 && opcao <= 4)
+            break;
+        else
+            Formatacao.Cor("Opção inválida! Tente novamente.", ConsoleColor.Magenta);
+    }
+
+    switch (opcao)
+    {
+        case 1:
+            Console.Clear();
             while (true)
             {
-                Formatacao.ImprimirCabecalho();
-                
-                Formatacao.Cor("1 - Adicionar Tarefa\n", ConsoleColor.White);
-                Formatacao.Cor("2 - Listar Tarefas\n", ConsoleColor.White);
-                Formatacao.Cor("3 - Concluir Tarefa\n", ConsoleColor.White);
-                Formatacao.Cor("4 - Remover Tarefa\n", ConsoleColor.White);
-                Formatacao.Cor("0 - Sair\n\n", ConsoleColor.Red);
-                Formatacao.Cor("Escolha uma opção: ", ConsoleColor.Yellow);
+                Console.Write("Digite a descrição da tarefa: ");
+                descricao = Console.ReadLine();
+                if (!string.IsNullOrEmpty(descricao))
+                    break;
+                Formatacao.Cor("Descrição não pode ficar vazia. Tente novamente.", ConsoleColor.Magenta);
+            }
+            GerenciadorTarefas.AdicionarTarefa(descricao);
+            break;
 
-                var opcao = Console.ReadLine();
+        case 2:
+            Console.Clear();
+            GerenciadorTarefas.ListarTarefas();
+            break;
 
-                switch (opcao)
+        case 3:
+            Console.Clear();
+            GerenciadorTarefas.ListarTarefas();
+            if (GerenciadorTarefas.listaDeTarefas.Any())
+            {
+                while (true)
                 {
-                    case "1":
-                        Formatacao.Cor("\nDescrição da tarefa: ", ConsoleColor.Gray);
-                        var desc = Console.ReadLine();
-                        gerenciador.AdicionarTarefa(desc);
+                    Console.Write("Digite o ID da tarefa a concluir: ");
+                    if (int.TryParse(Console.ReadLine(), out id) && id > 0 && id <= GerenciadorTarefas.listaDeTarefas.LastOrDefault().Id)
+                    {
+                        GerenciadorTarefas.ConcluirTarefa(id);
                         break;
-
-                    case "2":
-                        gerenciador.ListarTarefas();
-                        Console.WriteLine("Pressione qualquer tecla para continuar...");
-                        Console.ReadKey();
-                        break;
-
-                    case "3":
-                        Formatacao.Cor("\nID da tarefa a concluir: ", ConsoleColor.Gray);
-                        if (int.TryParse(Console.ReadLine(), out int idConcluir))
-                            gerenciador.ConcluirTarefa(idConcluir);
-                        break;
-
-                    case "4":
-                        Formatacao.Cor("\nID da tarefa a remover: ", ConsoleColor.Gray);
-                        if (int.TryParse(Console.ReadLine(), out int idRemover))
-                            gerenciador.RemoverTarefa(idRemover);
-                        break;
-
-                    case "0":
-                        return;
+                    }
+                    Formatacao.Cor("ID não encontrado. Tente novamente.", ConsoleColor.Magenta);
                 }
             }
-        }
+            else
+            {
+                Formatacao.Cor("Adicione tarefas antes de tentar conclui-las.", ConsoleColor.Magenta);
+                Console.WriteLine();
+            }
+            break;
+
+        case 4:
+            Console.Clear();
+            GerenciadorTarefas.ListarTarefas();
+            if (GerenciadorTarefas.listaDeTarefas.Any())
+            {
+                while (true)
+                {
+                    Console.Write("Digite o ID da tarefa a remover: ");
+                    if (int.TryParse(Console.ReadLine(), out id) && id > 0 && id <= GerenciadorTarefas.listaDeTarefas.LastOrDefault().Id)
+                    {
+                        GerenciadorTarefas.RemoverTarefa(id);
+                        break;
+                    }
+                    Formatacao.Cor("ID não encontrado. Tente novamente.", ConsoleColor.Magenta);
+                }
+            }
+            else
+            {
+                Formatacao.Cor("Adicione tarefas antes de tentar removê-las.", ConsoleColor.Magenta);
+                Console.WriteLine();
+            }
+            break;
+
+        case 0:
+            Console.WriteLine();
+            Formatacao.Cor("Saindo...", ConsoleColor.Red);
+            return;
     }
 }
