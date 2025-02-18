@@ -6,11 +6,16 @@ namespace SistemaTarefas.Servicos // Corrigido de "Servicos" se necessário
         private List<Tarefa> tarefas = new List<Tarefa>();
         private int proximoId = 1;
 
-        public void AdicionarTarefa(string descricao)
-        {
-            tarefas.Add(new Tarefa(proximoId, descricao));
-            proximoId++;
-        }
+       public void AdicionarTarefa(string descricao)
+{
+    if (string.IsNullOrWhiteSpace(descricao))
+    {
+        Console.WriteLine("Descrição não pode ser vazia.");
+        return;
+    }
+    tarefas.Add(new Tarefa(proximoId, descricao));
+    proximoId++;
+}
 
         public void ConcluirTarefa(int id)
         {
