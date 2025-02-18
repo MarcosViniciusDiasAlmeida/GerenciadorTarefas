@@ -1,24 +1,23 @@
-using SistemaTarefas.Layout; // Adicione esta linha
-namespace SistemaTarefas.Modelos // Corrigido de "Modelos" para "Modelos"
+using Layout;
+using GerenciarTarefa;
+
+namespace Tarefas
 {
     public class Tarefa
     {
-        public int ID { get; set; }
-        public string Descricao { get; set; }
+        private static int proximoId = 1;
         public bool Concluida { get; set; }
-
-        public Tarefa(int id, string descricao)
+        public int Id { get; set; }
+        public string Descricao { get; set; }
+        public Tarefa(string descricao)
         {
-            ID = id;
-            Descricao = descricao;
             Concluida = false;
+            Id = proximoId++;
+            Descricao = descricao;            
         }
-
         public void ExibirTarefa()
         {
-            var status = Concluida ? "[X]" : "[ ]";
-            Console.Write($"{ID.ToString().PadRight(5)} {status} ");
-            Formatacao.Cor($"{Descricao}\n", Concluida ? ConsoleColor.Green : ConsoleColor.White);
+            Formatacao.Cor($"{(Concluida ? "[X]" : "[ ]")} ID: {Id} – {Descricao}", ConsoleColor.Yellow);
         }
     }
 }
