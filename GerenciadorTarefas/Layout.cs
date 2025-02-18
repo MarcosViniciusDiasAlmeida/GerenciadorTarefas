@@ -1,22 +1,19 @@
-using System;
-
-namespace SistemaTarefas.Layout
+namespace Layout
 {
-    public static class Formatacao
+    class Formatacao
     {
         public static void Cor(string mensagem, ConsoleColor cor)
         {
             Console.ForegroundColor = cor;
-            Console.Write(mensagem);
+            Console.WriteLine(mensagem);
             Console.ResetColor();
         }
-
         public static void ImprimirCabecalho()
         {
-            Console.Clear();
-            Cor("***************************************\n", ConsoleColor.Blue);
-            Cor("*       GERENCIADOR DE TAREFAS        *\n", ConsoleColor.Yellow);
-            Cor("***************************************\n\n", ConsoleColor.Blue);
+            Console.WriteLine(new string(' ', (Console.WindowWidth - 26) / 2) + "╔════════════════════════╗");
+            Console.WriteLine(new string(' ', (Console.WindowWidth - 26) / 2) + "║ GERENCIADOR DE TAREFAS ║");
+            Console.WriteLine(new string(' ', (Console.WindowWidth - 26) / 2) + "╚════════════════════════╝");
+            Console.WriteLine();
         }
     }
 }
