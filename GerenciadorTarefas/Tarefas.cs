@@ -1,19 +1,24 @@
-using System;
-
-namespace Gerenciador_de_tarefas {
-    internal class Tarefa {
-        public string Titulo { get; set; }
+using SistemaTarefas.Layout; // Adicione esta linha
+namespace SistemaTarefas.Modelos // Corrigido de "Modelos" para "Modelos"
+{
+    public class Tarefa
+    {
+        public int ID { get; set; }
         public string Descricao { get; set; }
+        public bool Concluida { get; set; }
 
-        public Tarefa() { }
-
-          public Tarefa(string Titulo, string Descricao) {
-            this.Titulo = Titulo;
-            this.Descricao = Descricao;
+        public Tarefa(int id, string descricao)
+        {
+            ID = id;
+            Descricao = descricao;
+            Concluida = false;
         }
 
-        public override string ToString() {
-            return $"Título: {Titulo}\ndescrição: {Descricao}";
+        public void ExibirTarefa()
+        {
+            var status = Concluida ? "[X]" : "[ ]";
+            Console.Write($"{ID.ToString().PadRight(5)} {status} ");
+            Formatacao.Cor($"{Descricao}\n", Concluida ? ConsoleColor.Green : ConsoleColor.White);
         }
     }
 }

@@ -1,57 +1,58 @@
-namespace Gerenciador_de_tarefas {
-    internal class Program {
-        static void Main(string[] args) {
+using SistemaTarefas.Layout;
+using SistemaTarefas.Servicos;
+using SistemaTarefas.Modelos; // Adicione esta linha
+using System;
+// ... resto do código
+namespace SistemaTarefas
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var gerenciador = new GerenciadorTarefas();
+            
+            while (true)
+            {
+                Formatacao.ImprimirCabecalho();
+                
+                Formatacao.Cor("1 - Adicionar Tarefa\n", ConsoleColor.White);
+                Formatacao.Cor("2 - Listar Tarefas\n", ConsoleColor.White);
+                Formatacao.Cor("3 - Concluir Tarefa\n", ConsoleColor.White);
+                Formatacao.Cor("4 - Remover Tarefa\n", ConsoleColor.White);
+                Formatacao.Cor("0 - Sair\n\n", ConsoleColor.Red);
+                Formatacao.Cor("Escolha uma opção: ", ConsoleColor.Yellow);
 
-            GerenciadorDeTarefas gerenciador = new();
+                var opcao = Console.ReadLine();
 
-            bool continuar = true;
-
-             while (continuar) {
-                Console.WriteLine("Escolha uma opção: ");
-                Console.WriteLine("1. Adicionar Tarefa");
-                Console.WriteLine("2. Remover Tarefa");
-                Console.WriteLine("3. Listar Tarefa");
-                Console.WriteLine("4. Sair.");
-                Console.Write("Opção: ");
-                string opcao = Console.ReadLine();
-
-                switch (opcao) {
-
+                switch (opcao)
+                {
                     case "1":
-
-                        Console.Write("Título da tarefa: ");
-                        string titulo = Console.ReadLine();
-
-                        Console.Write("Descrição da tarefa: ");
-                        string descricao = Console.ReadLine();
-
-                        Tarefa novaTarefa = new(titulo, descricao);
-                        gerenciador.AdicionarTarefa(novaTarefa);
-
+                        Formatacao.Cor("\nDescrição da tarefa: ", ConsoleColor.Gray);
+                        var desc = Console.ReadLine();
+                        gerenciador.AdicionarTarefa(desc);
                         break;
 
                     case "2":
-
-                        Console.WriteLine("Título");
-                        string tituloRemover = Console.ReadLine();
-
-                        gerenciador.RemoverTarefa(tituloRemover);
+                        gerenciador.ListarTarefas();
+                        Console.WriteLine("Pressione qualquer tecla para continuar...");
+                        Console.ReadKey();
                         break;
 
                     case "3":
-                        gerenciador.ListarTarefas();
+                        Formatacao.Cor("\nID da tarefa a concluir: ", ConsoleColor.Gray);
+                        if (int.TryParse(Console.ReadLine(), out int idConcluir))
+                            gerenciador.ConcluirTarefa(idConcluir);
                         break;
+
                     case "4":
-                        continuar = false;
-                        Console.WriteLine("Saindo...");
+                        Formatacao.Cor("\nID da tarefa a remover: ", ConsoleColor.Gray);
+                        if (int.TryParse(Console.ReadLine(), out int idRemover))
+                            gerenciador.RemoverTarefa(idRemover);
                         break;
-                    default:
-                        Console.WriteLine("opção invalida!");
-                        break;
+
+                    case "0":
+                        return;
                 }
-
-
-
             }
         }
     }

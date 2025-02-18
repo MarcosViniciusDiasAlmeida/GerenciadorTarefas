@@ -1,32 +1,37 @@
-using System;
+using SistemaTarefas.Modelos; // Adicione esta linha
+namespace SistemaTarefas.Servicos // Corrigido de "Servicos" se necessário
+{
+    public class GerenciadorTarefas
+    {
+        private List<Tarefa> tarefas = new List<Tarefa>();
+        private int proximoId = 1;
 
-namespace Gerenciador_de_tarefas {
-    internal class GerenciadorDeTarefas {
-
-         List<Tarefa> tarefas = new List<Tarefa>();
-
-        public void AdicionarTarefa(Tarefa tarefa) {
-            tarefas.Add(tarefa);
-        }
-        public void RemoverTarefa(String titulo) {
-            Tarefa tarefaParaRemover = tarefas.Find(t => t.Titulo == titulo);
-            if (tarefaParaRemover != null) {
-                tarefas.Remove(tarefaParaRemover);
-            }
-            else {
-                Console.WriteLine("Tarefa não encontrada!");
-            }
+        public void AdicionarTarefa(string descricao)
+        {
+            tarefas.Add(new Tarefa(proximoId, descricao));
+            proximoId++;
         }
 
-         public void ListarTarefas() {
-            if(tarefas.Count == 0) {
-                Console.WriteLine("Nenhuma tarefa encontrada.");
-                return;
+        public void ConcluirTarefa(int id)
+        {
+            var tarefa = tarefas.Find(t => t.ID == id);
+            if (tarefa != null) tarefa.Concluida = true;
+        }
+
+        public void ListarTarefas()
+        {
+            Formatacao.Cor("\nLISTA DE TAREFAS:\n", ConsoleColor.Cyan);
+            Formatacao.Cor("ID    Status Descrição\n", ConsoleColor.DarkYellow);
+            foreach (var tarefa in tarefas)
+            {
+                tarefa.ExibirTarefa();
             }
-            foreach(Tarefa tarefa in tarefas) {
-                Console.WriteLine(tarefa);
-                Console.WriteLine();
-            }
+            Console.WriteLine();
+        }
+
+        public void RemoverTarefa(int id)
+        {
+            tarefas.RemoveAll(t => t.ID == id);
         }
     }
 }
