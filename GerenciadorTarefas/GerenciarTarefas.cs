@@ -1,42 +1,58 @@
-using SistemaTarefas.Modelos; // Adicione esta linha
-namespace SistemaTarefas.Servicos // Corrigido de "Servicos" se necessário
-{
-    public class GerenciadorTarefas
-    {
-        private List<Tarefa> tarefas = new List<Tarefa>();
-        private int proximoId = 1;
+using Layout;
+using Tarefas;
 
-       public void AdicionarTarefa(string descricao)
+namespace GerenciarTarefa
 {
-    if (string.IsNullOrWhiteSpace(descricao))
+    class GerenciadorTarefas
     {
-        Console.WriteLine("Descrição não pode ser vazia.");
-        return;
-    }
-    tarefas.Add(new Tarefa(proximoId, descricao));
-    proximoId++;
-}
-
-        public void ConcluirTarefa(int id)
+        public static List<Tarefa> listaDeTarefas = new List<Tarefa>();
+        public static void AdicionarTarefa(string descricao)
         {
-            var tarefa = tarefas.Find(t => t.ID == id);
-            if (tarefa != null) tarefa.Concluida = true;
+            listaDeTarefas.Add(new Tarefa(descricao));
+            Formatacao.Cor("Tarefa adicionada com sucesso!", ConsoleColor.Green);
+            Console.WriteLine();
         }
-
-        public void ListarTarefas()
+        public static void ListarTarefas()
         {
-            Formatacao.Cor("\nLISTA DE TAREFAS:\n", ConsoleColor.Cyan);
-            Formatacao.Cor("ID    Status Descrição\n", ConsoleColor.DarkYellow);
-            foreach (var tarefa in tarefas)
+            if (listaDeTarefas.Any())
             {
-                tarefa.ExibirTarefa();
+                Console.WriteLine("Tarefas:");
+                foreach (var tarefa in listaDeTarefas)
+                    tarefa.ExibirTarefa();
+            }
+            else
+            {
+                Formatacao.Cor("Nenhuma tarefa adicionada.", ConsoleColor.Yellow);
             }
             Console.WriteLine();
         }
-
-        public void RemoverTarefa(int id)
+        public static void ConcluirTarefa(int id)
         {
-            tarefas.RemoveAll(t => t.ID == id);
+            var tarefa = listaDeTarefas.Find(t => t.Id == id);
+            if (tarefa != null)
+            {
+                tarefa.Concluida = true;
+                Formatacao.Cor("Tarefa concluída!", ConsoleColor.Green);
+            }
+            else
+            {
+                Formatacao.Cor("ID não encontrado. Tente novamente.", ConsoleColor.Magenta);
+            }
+            Console.WriteLine();
+        }
+        public static void RemoverTarefa(int id)
+        {
+            var tarefa = listaDeTarefas.Find(t => t.Id == id);
+            if (tarefa != null)
+            {
+                listaDeTarefas.Remove(tarefa);
+                Formatacao.Cor("Tarefa removida com sucesso!", ConsoleColor.Red);
+            }
+            else
+            {
+                Formatacao.Cor("ID não encontrado. Tente novamente.", ConsoleColor.Magenta);
+            }
+            Console.WriteLine();
         }
     }
 }
