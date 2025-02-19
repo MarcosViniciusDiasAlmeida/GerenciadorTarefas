@@ -1,12 +1,11 @@
 # GerenciadorTarefas
 
-Projeto desenvolvido durante as aulas do curso técnico em Informática para Internet do SENAI-MG, com o objetivo de criar um gerenciador de tarefas no C#.
+Projeto desenvolvido durante as aulas do curso técnico em Informática para Internet do SENAI-MG, com o objetivo de criar um gerenciador de tarefas em Csharp.
 
 ## Ferramentas utilizadas
 - Framework: .NET
-- IDE: Visual Studio Code
+- Linguagem : c#
 - Versionamento: GIT
-- Gestão de repositórios: GitHub
 
 ## Funcionalidades
 - Adicionar Tarefa: Permite ao usuário inserir a descrição de uma nova tarefa.
